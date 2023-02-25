@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Pb's Personal Site - Python Virtual Environment</title>
+    </head>
+    <body>
+        <header>
+            <a href="index.html">Click to go back</a>
+        </header>
+        <main>
+            <h1>Python Virtual Environment</h1>
+            <p>Every system has one central place where its python files and packages are at. But if there are multiple python projects each of it running its own version of a package <strong>eg</strong> matplotlib where one project requires version 2.2 and another project requires version 2.3.</p>
+            <p>But every version of python can run only one version of the package so it is not possible for two projects running the same version of python to run with two versions of matplotlib</p>
+            <br><br>
+            <p>As a result, python virtual environments were brought in. The idea is we would create individual folders with its own python files and packages for every project. That way each project can have its own version of packages and python to run against</p>
+            <h2>To create a virtual environment in your project folder do the following</h2>
+            <code>user@host:~$ python3 -m venv virtual_env</code>
+            <p>This will create a folder in your project that contains a localized version of python and pip and setuptools installed. The version of python installed is the same version of the python that you used to run the command with</p>
+            <p>Usually any packages you install will install into the global directory and the python that you use is also global to see where your global python resides you can do a <code>which</code> command and see the result</p>
+            <code>
+                user@host:~$ which python3<br><br>
+                /usr/bin/python3
+            </code>
+            <p>But once the virtual environment is created, we can activate it and use the python that is present inside. The virtual environment is basically a folder that just contains its own copy of python, pip, setuptools and so on</p>
+            <p>All packages that are installed will be installed here (assuming the environment is activated)</p>
+            <code>user@host:~$ source virtual_env/bin/activate</code>
+            <p>Doing this would activate the environment and this is clear from the user prompt in the terminal</p>
+            <code>(virtual_env) user@host:~$ </code>
+            <p>And typing in <code>which python</code> will only point to the python that is inside the virtual_env directory and any new packages that are installed with pip will be installed to <code>virtual_env/lib/python3/site-packages</code></p>
+        </main>
+    </body>
+</html>
