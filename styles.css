@@ -1,0 +1,23 @@
+/* Fonts */
+@font-face {
+    font-family: SoraLight;
+    src: url('Sora-Light.ttf');
+}
+
+@font-face {
+    font-family: SoraRegular;
+    src: url('Sora-Regular.ttf');
+}
+
+@font-face {
+    font-family: SoraSemiBold;
+    src: url('Sora-SemiBold.ttf');
+}
+
+html {
+    font-family: SoraLight;
+}
+
+h2 {
+    font-family: SoraSemiBold;
+}
