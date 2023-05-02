@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>Pb's Personal Site - Overcoming IO Overhead</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <header>
+            <a href="index.html">Click to go back</a>
+        </header>
+        <main>
+            <h1>Overcoming IO Overhead</h1>
+            <p>Assume there are 2 services</p>
+            <ul>
+                <li>Service A</li>
+                <li>Service B</li>
+            </ul>
+            <p>Both of these are online. When Service A makes a request to Service B, it has to wait until Service B responds before proceeding with its next instructions. To go into further detail Service A will run on a thread and from this thread a request will be made to Service B and until we get the response back this thread will keep waiting</p>
+            <p>This model is called as <strong>one-thread-per-request model</strong></p>
+            <p>This is an expensive operation because only one thread can run on a CPU core at any given point of time. So if a thread is waiting for a response back then other threads also have to wait for this thread to get off the CPU core so they can do their tasks</p>
+            <p>There are two ways of solving this problem</p>
+            <ul>
+                <li>User Space Threads / Lightweight Threads</li>
+                <li>
+                    Asynchronous Programming
+                    <ul>
+                        <li>Thread Based</li>
+                        <li>Event Based</li>
+                    </ul>
+                </li>
+            </ul>
+            <h2>User Space / Lightweight Threads</h2>
+            <p>Instead of using the Kernel Threads (ie threads managed by the OS which run on the CPU core directly) the plan is to use a "user space" thread that runs on our language model/framework. In other words our application will have multiple threads, one that makes a request to Service B and another that does something else and so on but ALL of them will be mapped to a single Kernel Thread</p>
+            <p>So for example if we have 5 Kernel Threads then each kernel thread could be mapped to 20 user space threads. If one of the user space thread is going to have to wait for some other process then our language/framework can swap it out with another user space thread</p>
+            <p>The Kernel thread itself won't have any clue that a user space thread changed above it, because all it sees is a single process running since the language model/framework code is handling it</p>
+            <p>The Context Switches are a lot cheaper too. We basically would have 100 user space threads running on 20 kernel threads which are in turn running on 4 CPU cores forming a funnel shaped system</p>
+            <p>Ideally this means that to achieve concurrency the programmer only needs to learn the language/framework and does not need to worry about how it works under the hood</p>
+            <p>Some examples of frameworks/languages that use this model are </p>
+            <ul>
+                <li>Quasar Framework (Java)</li>
+                <li>Coroutines in Go - Goroutines</li>
+                <li>Coroutines in Kotlin</li>
+            </ul>
+
+            <h2>Asynchronous Programming</h2>
+            <p>The idea here is that threads submit their tasks for execution and move on to other tasks and then only return to their original tasks when they get notified that it has been completed and that it can be taken up by the thread again.</p>
+            <h3>Thread Based Model</h3>
+            <p>Also called as the work stealing model. This involves having a group of thread pools each of which specialize in a specific kind of task. When a thread has a task it will hand it over to the corresponding thread pool for a thread there to take it up while this thread can go and do something else. There might be some blocking within the threads in the thread pool but other than there is no blocking in the actual thread where our application tasks are running</p>
+            <h3>Event Based Model</h3>
+            <p>Here a thread starts off a task in the kernel and stashes away the call stack and then does its other tasks and once the task is done it is notified that it is done after which it can come back and pick the task up</p>
+            <a href="https://kislayverma.com/programming/overcoming-io-overhead-in-micro-services/">More to come</a>
+        </main>
+    </body>
+</html>
