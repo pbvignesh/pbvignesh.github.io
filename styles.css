@@ -21,3 +21,7 @@ html {
 h2 {
     font-family: SoraSemiBold;
 }
+
+table, th, td {
+    border: 1px solid black;
+}
