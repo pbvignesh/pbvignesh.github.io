@@ -1,17 +1,17 @@
 /* Fonts */
 @font-face {
     font-family: SoraLight;
-    src: url('Sora-Light.ttf');
+    src: url('fonts/Sora-Light.ttf');
 }
 
 @font-face {
     font-family: SoraRegular;
-    src: url('Sora-Regular.ttf');
+    src: url('fonts/Sora-Regular.ttf');
 }
 
 @font-face {
     font-family: SoraSemiBold;
-    src: url('Sora-SemiBold.ttf');
+    src: url('fonts/Sora-SemiBold.ttf');
 }
 
 html {
