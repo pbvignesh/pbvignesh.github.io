@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>Pb's Personal Site - Elastic Search</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <header>
+            <a href="index.html">Click to go back</a>
+        </header>
+        <main>
+            <h1>SQLAlchemy</h1>
+            <p>SQLAlchemy is split into two main parts.</p>
+            <ul>
+                <li>SQLAlchemy Core</li>
+                <li>SQLAlchemy ORM</li>
+            </ul>
+            <p>The Core contains APIs for writing raw SQL statements while the ORM is for interacting with the database with python code. The ORM itself is written on top of the Core API</p>
+            <hr><hr>
+            <h2>The Engine</h2>
+            <p>The Engine is the component that contains all connections to one database. It gives a factory to make a new connection to it and also has a holding space called as a <em>connection pool</em>. Ideally each database should have only one engine that helps the developer connect to it</p>
+            <figure>
+                <img src="images/sql_alchemy_engine.png">
+                <figcaption>A reference diagram of the Engine</figcaption>
+            </figure>
+
+            To create a engine we can use the <code>create_engine</code> method.<br><br>
+            <code>
+                from sqlalchemy import create_engine<br>
+                engine = create_engine("mysql+pymysql://root:root@localhost/database", echo = True)
+            </code>
+            <p>However this in itself does not connect to the database yet. It will connect only when we actually try to query something. This is called as <em>Lazy initialization</em></p>
+            <hr><hr>
+            <h2>Working with Transactions and DBAPI</h2>
+            <p>The Engine provides us with a <em>Connection</em> object which resembles one connection to the database</p>
+            <p>We can connect to the database by creating a connection and querying it.</p>
+            <code>
+                from sqlalchemy import text<br><br>
+                connection = engine.connect()<br>
+                result = connection.execute(text('select "hello world"'))<br>
+                print(result.all())<br>
+            </code>
+            <p>Doing it this way just hits the query. We can also do the same in a context manager</p>
+            <code>
+                with engine.connect() as connection:<br>
+                    <span style="text-indent: 50px">result = connection.execute(text('select "hello world"'))</span><br>
+                    print(result.all())
+            </code>
+            <p>Doing it this way creates a transaction and runs the query and since we don't have a <code>connection.commit()</code> at the end, the queries get rolled back. Including it will commit it</p>
+        </main>
+    </body>
+</html>
