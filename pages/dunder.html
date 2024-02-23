@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>Pb's Personal Site - Dunder Methods</title>
+        <link rel="stylesheet" href="../styles.css">
+    </head>
+    <body>
+        <header>
+            <a href="../index.html">Click to go back</a>
+        </header>
+        <main>
+            <h1>Dunder Methods</h1>
+            <p>Dunder methods (ie double underscore methods) are methods that are called implicitly by python for instances of a class based on certain scenarios. These methods are not called manually by the programmer though and sometimes feel like magic (hence called magic methods)</p>
+            <p>One common example of a dunder method that is used often is the <code>__init__</code> method that is used for initializing an object</p>
+            <pre>
+                <code>
+                    class Square:
+                        def __init__(self, side_length):
+                            self.side_length = side_length
+
+                    square = Square(1)
+                </code>
+            </pre>
+
+            <p>In the above code even though the <code>__init__</code> method is not called it will be called implicity by python</p>
+            <h2>Operator overloading with Dunder Methods</h2>
+            <p>All python operators actually are implementing the dunder method internally. For example when we have code like <code>value in array_variable</code>, the <code>__contains__</code> dunder method is actually called</p>
+            <p>In other words calling <code>value in array_variable</code> is the exact same as <code>value.__contains__(array_variable)</code></p>
+
+            <p>So operator overloading is as easy as just implementing the dunder methods. There are many dunder methods like <code>__str__</code>, <code>__repr__</code>, <code>__new__</code> etc</p>
+
+            <h2>Using __repr__ vs __str__</h2>
+            <p><code>__repr__</code> and <code>__str__</code> are two dunder methods that are used to display information about the class to a human. Use <code>__repr__</code> to print detailed information about a class to the developer / programmer and use <code>__str__</code> to print basic information about the class to an end user.</p>
+            <p>Ideally the output of a <code>__repr__</code> can be directly run in the python repl to create an object</p>
+        </main>
+    </body>
+</html>

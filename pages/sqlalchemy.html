@@ -24,27 +24,33 @@
             </figure>
 
             To create a engine we can use the <code>create_engine</code> method.<br><br>
+            <pre>
             <code>
                 from sqlalchemy import create_engine<br>
                 engine = create_engine("mysql+pymysql://root:root@localhost/database", echo = True)
             </code>
+            </pre>
             <p>However this in itself does not connect to the database yet. It will connect only when we actually try to query something. This is called as <em>Lazy initialization</em></p>
             <hr><hr>
             <h2>Working with Transactions and DBAPI</h2>
             <p>The Engine provides us with a <em>Connection</em> object which resembles one connection to the database</p>
             <p>We can connect to the database by creating a connection and querying it.</p>
-            <code>
-                from sqlalchemy import text<br><br>
-                connection = engine.connect()<br>
-                result = connection.execute(text('select "hello world"'))<br>
-                print(result.all())<br>
-            </code>
-            <p>Doing it this way just hits the query. We can also do the same in a context manager</p>
-            <code>
-                with engine.connect() as connection:<br>
-                    <span style="text-indent: 50px">result = connection.execute(text('select "hello world"'))</span><br>
+            <pre>
+                <code>
+                    from sqlalchemy import text<br>
+                    connection = engine.connect()
+                    result = connection.execute(text('select "hello world"'))
                     print(result.all())
-            </code>
+                </code>
+            </pre>
+            <p>Doing it this way just hits the query. We can also do the same in a context manager</p>
+            <pre>
+                <code>
+                    with engine.connect() as connection:
+                        result = connection.execute(text('select "hello world"'))
+                        print(result.all())
+                </code>
+            </pre>
             <p>Doing it this way creates a transaction and runs the query and since we don't have a <code>connection.commit()</code> at the end, the queries get rolled back. Including it will commit it</p>
         </main>
     </body>
