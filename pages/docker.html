@@ -1,0 +1,72 @@
+<html>
+    <head>
+        <title>Pb's Personal Site - DNS</title>
+        <link rel="stylesheet" href="../styles.css">
+    </head>
+    <body>
+        <header>
+            <a href="../index.html">Click to go back</a>
+        </header>
+        <main>
+            <h1>Docker</h1>
+            Docker is used to build a container which is an enclosed space where our software can run without other software interfering with it. The docker software is basically a client-server software where the server runs a process called <em>dockerd (Docker Daemon)</em> and users can interact with it via a REST API from the terminal.
+
+            <p><b>Note:</b> Even though REST concepts are something that we see in networking, docker follows the same except instead of urls it relies on file sockets</p>
+            <figure>
+                <img src="../images/docker_engine.png">
+                <figcaption>An image illustrating what the docker software looks like</figcaption>
+            </figure>
+
+            <h2>Workflow</h2>
+            <p>Using the docker engine itself is simple. The workflow is shown below</p>
+            <figure>
+                <img src="../images/docker_workflow.png">
+                <figcaption>An image illustrating the workflow of using docker</figcaption>
+            </figure>
+
+            <p>Usually for commonly used software like nginx, apache etc, the images are publicly available for us to just pull and use from <em>registries</em> that are present. Some of the registries are listed below</p>
+            <ul>
+                <li><a href="https://hub.docker.com/">Dockerhub</a></li>
+                <li><a href="https://aws.amazon.com/ecr/">Amazon Elastic Container Registry(ECR)</a></li>
+                <li><a href="https://cloud.google.com/artifact-registry">Google Container Registry(GCR)</a></li>
+                <li><a href="https://azure.microsoft.com/en-in/products/container-registry">Azure Container Registry(ACR)</a></li>
+                <li><a href="https://quay.io/">Quay</a> (by Redhat)</li>
+                <li>Github Packages Docker Registry</li>
+                <li><a href="https://goharbor.io/">Harbor</a></li>
+                <li><a href="https://jfrog.com/artifactory/">JFrog Artifactory</a></li>
+                <li><a href="https://www.sonatype.com/products/sonatype-nexus-repository">Sonatype Nexus Repository</a></li>
+            </ul>
+
+            <p>But when it comes to our own software then we have to write the Dockerfile and then build the image and then share it</p>. Image names are usually in the form of <em>image:tag or image:@digest</em>
+
+            <h2>Building your own custom image</h2>
+            <p>To build a custom image create a file with the name <em>Dockerfile</em> in the directory where your project is. For example if we want to containerize a simple html file, here is how we would do it. </p>
+            <pre>
+                FROM nginx:alpine                       # nginx is the name of the image and alpine is the name of the tag
+                RUN rm /usr/share/nginx/html/index.html # We are removing the default index.html file that comes in nginx servers
+                COPY index.html /usr/share/nginx/html   # And we are copying our own index.html to it
+                EXPOSE 80                               # We expose port 80 to let clients connect
+                CMD ["nginx", "-g", "daemon off;"]      # We tell the container to start the command nginx -g daemon off; ie start nginx in the foreground when a container is built
+            </pre>
+
+            <p>The difference between the <em>RUN</em> command and the <em>CMD</em> command is that RUN is used during building the image while CMD is for running commands when a container is created. Only the last CMD command will be considered</p>
+
+            <p>Now that we have this we can build an image out of this with the command <code>docker build -t image_name .</code></p>
+            <pre>
+                docker build -t sample_image .
+            </pre>
+            <p>Once you do this, the building step happens which looks something like the below</p>
+            <figure>
+                <img src="../images/docker_building.png" width="400" height="400">
+                <figcaption>An image of the command line when docker build is called</figcaption>
+            </figure>
+            <p>But there won't be any indication of an output file or anything anywhere. These images are stored in different places depending on the operating system, for Mac and Windows they are stored in a virtual machine file system that the Docker engine creates. It is not clear as of now whether this can be configured, it is however stored in <em>/var/lib/docker</em> in Linux though</p>
+            <p>To look at the list of images that are present in the computer, you can run <code>docker images</code> which gives an output that looks like the following</p>
+            <figure>
+                <img src="../images/docker_image_listing.png" width="1200" height="450">
+                <figcaption>An image of the command line when docker images is called</figcaption>
+            </figure>
+            <p>You can delete these images by running <code>docker rmi image_id1 image_id2</code></p>
+        </main>
+    </body>
+</html>
