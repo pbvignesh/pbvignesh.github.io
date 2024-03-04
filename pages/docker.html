@@ -51,7 +51,7 @@
 
             <p>The difference between the <em>RUN</em> command and the <em>CMD</em> command is that RUN is used during building the image while CMD is for running commands when a container is created. Only the last CMD command will be considered</p>
 
-            <p>Now that we have this we can build an image out of this with the command <code>docker build -t image_name .</code></p>
+            <p>Now that we have this we can build an image out of this with the command <code>docker build -t image_name .</code>. Here -t stands for tag name</p>
             <pre>
                 docker build -t sample_image .
             </pre>
@@ -67,6 +67,35 @@
                 <figcaption>An image of the command line when docker images is called</figcaption>
             </figure>
             <p>You can delete these images by running <code>docker rmi image_id1 image_id2</code></p>
+            <p><b>Note:</b> It should be noted that a container needs like a running process for it to run. So for instance if you create a container with linux and a static html file, it will instantly stop. One way to keep it running is to run some dummy command like <em>tail</em> or something</p>
+            <p>For instance if we want to create a standalone docker image with nothing in it, except maybe a barebones OS we can simply put the following</p>
+            <pre>
+                FROM alpine # A small linux distro
+                CMD ["tail", "-f", "/dev/null"] # A placeholder command so that the container does not terminate
+            </pre>
+
+            <h2>Creating a container from an image</h2>
+            <p>To create a container we have two options: </p>
+            <ul>
+                <li>Create a container and run it immediately</li>
+                <li>Create a container but run it later separately</li>
+            </ul>
+            <h3>Create a container and run it immediately</h3>
+            <p>To create a container and run it immediately run the following command</p>
+            <pre>docker run -d --name container_name image_name # The -d is to run the container in a detached mode</pre>
+            <p>When we run this command all we get as output is the container id.</p>
+            <h3>Create a container but run it separately later</h3>
+            <p>This happens in a two step process</p>
+            <ul>
+                <li>Create the container with a create command</li>
+                <li>Start the container later with a start command</li>
+            </ul>
+            <p>To create the container run the following command</p>
+            <pre>docker create --name container_name image_name</pre>
+            <p>To start/stop the container you can run</p>
+            <pre>docker start container_id</pre> or <pre>docker stop container_id</pre>
+            <p>To see the list of all docker containers, you can just run</p>
+            <pre>docker ps -a # Where -a is to see containers that are not running</pre>
         </main>
     </body>
 </html>
