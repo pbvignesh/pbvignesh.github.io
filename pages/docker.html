@@ -74,28 +74,20 @@
                 CMD ["tail", "-f", "/dev/null"] # A placeholder command so that the container does not terminate
             </pre>
 
-            <h2>Creating a container from an image</h2>
+            <h2>Creating a container from an image and Deleting a container</h2>
             <p>To create a container we have two options: </p>
             <ul>
                 <li>Create a container and run it immediately</li>
                 <li>Create a container but run it later separately</li>
             </ul>
-            <h3>Create a container and run it immediately</h3>
-            <p>To create a container and run it immediately run the following command</p>
-            <pre>docker run -d --name container_name image_name # The -d is to run the container in a detached mode</pre>
-            <p>When we run this command all we get as output is the container id.</p>
-            <h3>Create a container but run it separately later</h3>
-            <p>This happens in a two step process</p>
-            <ul>
-                <li>Create the container with a create command</li>
-                <li>Start the container later with a start command</li>
-            </ul>
-            <p>To create the container run the following command</p>
-            <pre>docker create --name container_name image_name</pre>
-            <p>To start/stop the container you can run</p>
-            <pre>docker start container_id</pre> or <pre>docker stop container_id</pre>
-            <p>To see the list of all docker containers, you can just run</p>
-            <pre>docker ps -a # Where -a is to see containers that are not running</pre>
+            <figure>
+                <img src="../images/starting_a_container.png">
+                <figcaption>An image on the two ways to create and run a container.</figcaption>
+            </figure>
+            <p>The -d in the run command means we are starting the container in <em>detached mode</em></p>
+            <h3>Deletion of a Container</h3>
+            <p>To delete a container we can just run the following command</p>
+            <pre>docker rm container_id</pre>
         </main>
     </body>
 </html>
