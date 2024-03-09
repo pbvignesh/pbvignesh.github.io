@@ -88,6 +88,63 @@
             <h3>Deletion of a Container</h3>
             <p>To delete a container we can just run the following command</p>
             <pre>docker rm container_id</pre>
+            <strong>Note:</strong> Interestingly when we try to delete an image before deleting the container. Docker would throw an error stating that the image is being used by the container and would not allow us to do. I have to investigage why would it still need the image after the container has already been created.
+            <h3>Attaching and Detaching</h3>
+            <p>When we create and run a container with the <em>-d</em> option, the container starts in a detached mode. <em>Detached</em> means that it will start in the background and control of the terminal will be given back to us</p>
+            <p>You should be able to attach to it by giving the following command</p>
+            <pre>docker attach container_id</pre>
+            <p>This will connect to the input/output and error of the docker container. But I do not yet know how to use this. To detach from it pressing Ctrl - Z works but online docs suggest pressing Ctrl P + Ctrl Q together which doesn't work for me</p>
+            <h3>Executing commands inside Docker</h3>
+            <p>A container basically contains a small filesystem where we can run commands. To send a command to execute inside a container we can run the following command</p>
+            <pre>docker exec container_id command</pre>
+            <b>Example: </b>
+            <pre>docker exec container_id ls</pre>
+            OR
+            <pre>docker exec container_id sh -c "cd /var"</pre>
+            <strong>Note:</strong> Although in the above example running cd /var/ is of no use because it will execute and return. sh is the argument you provide to the docker exec command while the -c flag helps you provide an argument to the sh command inside the container
+
+            <p>In case if you want to, just go inside the container's file system we can run it in as well</p>
+            <pre>docker exec -it container_id sh</pre>
+            <p>The <em>-i flag</em> is to be able to give interactive commands to the container. For example we could just run <code>docker exec -i container_id sh</code> and it will just wait for you to give input and if you give a command like <code>ls</code> and press enter it will display the output. It almost appears like a shell but without the user prompt or anything</p>
+
+            <p>The <em>-t flag</em> is to simulate a terminal, but usually it is recommended to do <em>-it</em> together, although it is unclear why as of now.</p>
+            <h3>Docker Networks</h3>
+            <p>Docker networks are merely an added layer of container (They call it networks though) where we can attach containers to the network and detach them from it. The idea is that all containers within a single network can easily talk to each other by the internal IP address that they are allotted inside the network</p>
+            <p>Commonly used commands with a network</p>
+            <table style="border: 1px solid black;">
+                <thead>
+                    <tr>
+                        <th>Command</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody style="border: 1px solid black;">
+                    <tr>
+                        <td>docker create network network_name</td>
+                        <td>Creates a network</td>
+                    </tr>
+                    <tr>
+                        <td>docker network ls</td>
+                        <td>Lists all networks</td>
+                    </tr>
+                    <tr>
+                        <td>docker network connect network_name container_name</td>
+                        <td>Attaches a container to a network</td>
+                    </tr>
+                    <tr>
+                        <td>docker network disconnect network_name container_name</td>
+                        <td>Removes a container from the network</td>
+                    </tr>
+                    <tr>
+                        <td>docker network rm network_name</td>
+                        <td>Deletes a network</td>
+                    </tr>
+                    <tr>
+                        <td>docker network inspect network_name</td>
+                        <td>Inspects the network and shows the containers that are attached to it. Looks like JSON</td>
+                    </tr>
+                </tbody>
+            </table>
         </main>
     </body>
 </html>
