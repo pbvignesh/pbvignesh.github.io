@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <title>Pb's Personal Site - AWS</title>
+        <link rel="stylesheet" href="../styles.css">
+    </head>
+    <body>
+        <header>
+            <a href="../index.html">Click to go back</a>
+        </header>
+        <main>
+            <h1>AWS</h1>
+            AWS stands for Amazon Web Services. Amazon offers many cloud services that we can use to configure to setup computer systems from our home by doing the operations on their website.
+
+            <h2>IAM - Identity and Access Management</h2>
+            <p>IAM is the service that we use to manage users in the organization. There is <b>one root account</b> that is created by default.</p>
+            <p><b>NOTE: THIS ROOT ACCOUNT SHOULD NOT BE SHARED TO ANYONE ELSE.</b></p>
+            <br>
+            <p>We can group various users in the organization into different groups. A user can be a part of multiple groups or no group at all. And a group cannot contain another group</p>
+            <img src="../images/aws_iam.png" height="100px" width="400px">
+
+            <h3>IAM-Permissions</h3>
+            <p>We can define various policies  on what a user/group can or cannot do based on JSON documents called <b>policies</b></p>
+            <img src="../images/aws_permissions.png" height="400px" width="400px">
+            <p>The policies follow an inheritance concept, the users get the policies of the group they are in, and if a user is in multiple groups they get the policies of both the groups. If a policy is directly attached to a user it is called as an inline policy</p>
+            <p>The Principle of Least Privilege is that we should NOT give more permissions than a user needs.</p>
+            <img src="../images/aws_policy_structure.png" height="400px" width="800px">
+            <h3>MFA</h3>
+            <p>It is recommended to have MFA for all accounts on AWS.</p>
+            <p>MFA = Password you know + Security Device you know</p>
+            <p>A Security device can be any of the following</p>
+            <ul>
+                <li>Virtual MFA Device (Like Authy, Google Authenticator)</li>
+                <li>Universal 2nd Factor (U2F) Security Key</li>
+                <li>Hardware Key Fob MFA Device</li>
+            </ul>
+            <h3>Accessing AWS</h3>
+            <p>There are 3 main ways to access AWS services</p>
+            <ul>
+                <li>Management Console - aka the website UI</li>
+                <li>CLI - aka our own computer terminal which makes calls to the AWS API</li>
+                <li>SDK - aka from software programs that we write</li>
+            </ul>
+            <p>Management console is fine but for AWS to allow accessing its services from the SDK/CLI it needs an access secret which is effectively a password</p>
+            <h3>AWS CLI</h3>
+            <p>The AWS Cli is a tool that helps us to connect to the AWS service from our own terminal</p>
+            <img src="../images/aws-cli.png" width="600px">
+
+            <h3>AWS Athena</h3>
+            <p>AWS Athena is a way to run SQL queries on top of your S3 buckets. You only need to the do the following steps</p>
+            <ul>
+                <li>Create some s3 bucket where your data is stored (usually parquet files, csv files etc)</li>
+                <li>Create a bucket for athena to store its results</li>
+                <li>Go to AWS athena and create a database and a table that it will be using for reference when you query the buckets</li>
+                <li>You are now ready to go - Write simple SQL Queries and get the output</li>
+            </ul>
+            <p>There are different ways of optimizing your Athena queries</p>
+            <ul>
+                <li>Compress the data stored in the bucket so the scanning is done over smaller data</li>
+                <li>Organize the data into different folders each with names like "column_name=value" that way when you add filters to your SQL query, Athena automatically uses the names as a way to skip over other unnecessary data</li>
+            </ul>
+            <p>You can also run these queries on top of other databases like aurora db, dynamodb etc by connecting to a lambda function, but I don't know how to do this yet</p>
+        </main>
+    </body>
+</html>
