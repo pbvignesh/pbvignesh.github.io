@@ -1,56 +1,284 @@
-<html>
-    <head>
-        <title>Pb's personal site</title>
-        <link href="dist/output.css" rel="stylesheet">
-    </head>
-    <body>
-        Hello, I am Pb and this is my personal site. You can follow me on twitter here: <a href="https://twitter.com/7_vignesh">7_vignesh</a>
-        <section>
-            <h2>Random Thoughts</h2>
-            <p>The below list contains things that I have been thinking about</p>
-            <ul>
-                <li><a href="pages/internet.html">The Modern Internet</a></li>
-            </ul>
-        </section>
-        <hr>
-        <section>
-            <h2>Personal Notes/Materials</h2>
-            <p>The below list is basically my own notes for things that I am studying about. They might be inaccurate/incomplete or just plain wrong. But I'll keep updating it as and when I learn more about the subject. If you notice any errors in the notes feel free to point them out to me. But <strong>DON'T</strong> use my notes as a tutorial, my knowledge on most things is zero so you're likely to break something if you follow my advice :)</p>
-            <ul>
-                <li><a href="pages/python_virtual_environment.html">Python Virtual Environment</a></li>
-                <li><a href="pages/nodejs.html">Node JS</a></li>
-                <li><a href="pages/overcoming_io_overhead.html">Overcoming IO Overhead</a></li>
-                <li><a href="pages/elastic_search.html">Elastic Search</a></li>
-                <li><a href="pages/sqlalchemy.html">SQLAlchemy</a></li>
-                <li><a href="pages/bluetooth.html">Bluetooth</a></li>
-                <li><a href="pages/apache.html">Apache</a></li>
-                <li><a href="pages/dns.html">DNS</a></li>
-                <li><a href="pages/python_dataclasses.html">Python Dataclasses</a></li>
-                <li><a href="pages/dunder.html">Dunder Method</a></li>
-                <li><a href="pages/terraform.html">Terraform</a></li>
-                <li><a href="pages/docker.html">Docker</a></li>
-                <li><a href="pages/aws.html">AWS</a></li>
-                <li><a href="pages/grafana.html">Grafana</a></li>
-            </ul>
-        </section>
-        <section>
-            <h2>Things to figure out/learn later</h2>
-            <ul>
-                <li>VPN</li>
-                <li>Wi-Fi</li>
-                <li>Solr/Splunk/Marklogic</li>
-                <li>Homebrew</li>
-                <li>Composer</li>
-            </ul>
-        </section>
-        <section>
-            <h2>Links that I want to bookmark</h2>
-            <ul>
-                <li><a href="https://db-engines.com/en/">Db Engines</a></li>
-                <li><a href="https://stackoverflow.com/questions/15694724/shards-and-replicas-in-elasticsearch">Shards and replicas</a></li>
-                <li><a href="https://www.susanrigetti.com/math">Susan Fowler's Math Guide</a></li>
-                <li><a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">What the heck is an Event loop? - Philip Roberts</a> - I found this to be the simplest explanation for what an event loop is</li>
-            </ul>
-        </section>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pb's Personal Site</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --text-color: #374151;
+            --light-bg: #f9fafb;
+            --dark-bg: #1f2937;
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: #9ca3af;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .social-links {
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            list-style-position: inside;
+            margin-bottom: 1rem;
+        }
+
+        ul li {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        strong {
+            font-weight: 600;
+            color: #ef4444;
+        }
+
+        hr {
+            margin: 2rem 0;
+            border: none;
+            height: 1px;
+            background-color: #e5e7eb;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="profile">
+            <!-- Probably add a headshot image here from linkedin for later -->
+            <!-- <div class="profile-pic">Pb</div> -->
+            <h1>Vignesh's Portfolio</h1>
+            <p>Software Developer & Tech Enthusiast</p>
+            <div class="social-links">
+                <a href="https://twitter.com/7_vignesh" target="_blank">
+                    Follow me on Twitter
+                </a>
+                <a href="https://www.linkedin.com/in/vignesh-p-b-5b278a135/" target="_blank">
+                    Check my LinkedIn
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <h2>About Me</h2>
+        <p>Hi ! I am a software engineer with more than 7 years of experience in the industry. I have worked with a wide variety of tools and tech. I've worked with PHP frameworks like Laravel, CakePHP. I've worked with Typescript and other JS frameworks like ReactJS and EmberJS.</p>
+
+        <p>I've also experimented with databases and search engines like MySQL and Elastic and lately I've been doing a lot of work in AI driven applications (primarily LLM backed applications and applications that use RAG and MCP Servers) </p>
+
+        <p>I don't really have a preferred tech stack and I love working with anything and everything that helps me solve a problem or makes me curious. This site is just me collating all my notes together, it is chaos at the moment but overtime it should be a lot more organized :)</p>
+    </section>
+
+    <!-- <section>
+        <h2>Random Thoughts</h2>
+        <p>The below list contains things that I have been thinking about</p>
+        <ul>
+            <li><a href="pages/internet.html">The Modern Internet</a></li>
+        </ul>
+    </section> -->
+
+    <section>
+        <h2>Technical Articles & Notes</h2>
+        <p>Below are my notes on various technologies I've been exploring. They represent my learning journey and are updated as I gain more understanding. While I strive for accuracy, <strong>please don't</strong> use these as definitive tutorials. If you notice any errors, feedback is always welcome!</p>
+
+        <div class="grid">
+            <a href="pages/python_virtual_environment.html" class="card">
+                <h3>Python Virtual Environment</h3>
+            </a>
+            <a href="pages/nodejs.html" class="card">
+                <h3>Node JS</h3>
+            </a>
+            <a href="pages/overcoming_io_overhead.html" class="card">
+                <h3>Overcoming IO Overhead</h3>
+            </a>
+            <a href="pages/elastic_search.html" class="card">
+                <h3>Elastic Search</h3>
+            </a>
+            <a href="pages/sqlalchemy.html" class="card">
+                <h3>SQLAlchemy</h3>
+            </a>
+            <a href="pages/bluetooth.html" class="card">
+                <h3>Bluetooth</h3>
+            </a>
+            <a href="pages/apache.html" class="card">
+                <h3>Apache</h3>
+            </a>
+            <a href="pages/dns.html" class="card">
+                <h3>DNS</h3>
+            </a>
+            <a href="pages/python_dataclasses.html" class="card">
+                <h3>Python Dataclasses</h3>
+            </a>
+            <a href="pages/dunder.html" class="card">
+                <h3>Dunder Methods</h3>
+            </a>
+            <a href="pages/terraform.html" class="card">
+                <h3>Terraform</h3>
+            </a>
+            <a href="pages/docker.html" class="card">
+                <h3>Docker</h3>
+            </a>
+            <a href="pages/aws.html" class="card">
+                <h3>AWS</h3>
+            </a>
+            <a href="pages/grafana.html" class="card">
+                <h3>Grafana</h3>
+            </a>
+        </div>
+    </section>
+
+    <section>
+        <h2>Learning Roadmap</h2>
+        <p>Technologies I'm planning to explore next:</p>
+        <ul>
+            <li>VPN</li>
+            <li>Wi-Fi</li>
+            <li>Solr/Splunk/Marklogic</li>
+            <li>Homebrew</li>
+            <li>Composer</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Useful Resources</h2>
+        <p>Links that I've found valuable:</p>
+        <ul>
+            <li><a href="https://db-engines.com/en/" target="_blank">DB Engines - Database ranking and comparison</a></li>
+            <li><a href="https://stackoverflow.com/questions/15694724/shards-and-replicas-in-elasticsearch" target="_blank">Shards and replicas in Elasticsearch</a></li>
+            <li><a href="https://www.susanrigetti.com/math" target="_blank">Susan Fowler's Math Guide</a></li>
+            <li><a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ" target="_blank">What the heck is an Event loop? - Philip Roberts</a> - I found this to be the simplest explanation for what an event loop is</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>© 2025 Pb. All rights reserved.</p>
+    </footer>
+</body>
 </html>
