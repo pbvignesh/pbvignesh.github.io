@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>Pb's Personal Site - Tmux</title>
+        <link rel="stylesheet" href="../styles.css">
+    </head>
+    <body>
+        <header>
+            <a href="../index.html">Click to go back</a>
+        </header>
+        <main>
+            <h1>Tmux - The terminal multiplexer</h1>
+            <p>Tmux is a program that lets you run terminal commands independently without having a client program (your terminal window) be attached to it. If you have a terminal window with a bunch of programs running on it (not necessarily running on a remote server) then you have to keep the window open to make it run. The moment you close the terminal or connection gets cut the programs also stop running.
+            </p>
+
+            <p>Tmux helps you avoid this situation by letting you run these programs independently within a 'session' and 'detach' from said session. The following commands would come in handy</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Command</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>tmux new-session -s [session-name]</td>
+                        <td>Create a new session</td>
+                    </tr>
+                    <tr>
+                        <td>Ctrl+b d </td>
+                        <td>Detach from a session</td>
+                    </tr>
+                    <tr>
+                        <td>tmux a -t [session-name]</td>
+                        <td>Attach to an existing session. The -t stands for target</td>
+                    </tr>
+                    <tr>
+                        <td>Ctrl+b c</td>
+                        <td>Create a new window within a session</td>
+                    </tr>
+                    <tr>
+                        <td>Ctrl+b ,</td>
+                        <td>Rename a window within a session</td>
+                    </tr>
+                    <tr>
+                        <td>Ctrl+b w</td>
+                        <td>Cycle between windows wthin a session</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>You can also create panes within a single window but it does not appear to be that useful (to me atleast) because the content is always cramped in. In theory you can resize the panes but that would mean some other pane is getting squished in</p>
+        </main>
+    </body>
+</html>
