@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>Pb's Personal Site - Z3 Theorem Prover</title>
+        <link rel="stylesheet" href="../styles.css">
+    </head>
+    <body>
+        <header>
+            <a href="../index.html">Click to go back</a>
+        </header>
+        <main>
+            <h1>Z3 - Theorem Prover</h1>
+
+            <p>Z3 is a theorem prover that can be used to determine if a set of theories / sequence of logical formulae can be satisfied as true or not. </p><p>Z3 also exposes a bunch of APIs which other tools can use. I think the Javascript and Python Z3 bindings make use of the Z3 API to expose their own language variants for it</p>
+
+            <h2>Basic Commands</h2>
+            A Z3 script is just a list of commands. It is not considered a programming language though because it does not have loops or variables. The two most basic commands that you can use are <br><br>
+            <ol>
+                <li>help - For showing the help section. Can be used like (help) in the script file</li>
+                <li>echo - For displaying a message. Can be used like (echo "message") in the script file</li>
+            </ol>
+            <h2>Workflow</h2>
+            The way to think about Z3 scripts is that users provide something called as <b>assertions</b>. Assertions are of two types<br><br>
+            <ol>
+                <li>User provided formulae</li>
+                <li>Declarations</li>
+            </ol><br>
+            Z3 internally maintains a stack to keep track of these assertions. We show two examples of constant declaration and function declaration
+            <ol>
+                <li>Constant - (declare-const constant_name constant_type) - (declare-const a Int)</li>
+                <li>Function - (declare-fun function_name (paramsTypes) ReturnType) - (declare-fun f (Int Bool) Int)</li>
+            </ol>
+            <br>
+            So these are declarations. If we want to add a formula we can use the assert keyword. The syntax is usually of the following format<br>
+            <code>
+                (assert (operator parameter1 parameter2))
+            </code><br>
+            <p>Examples are provided below</p>
+
+            <code>
+                (declare-const a Int)
+                (declare-fun f (Int Bool) Int)
+                (assert (< a 10))
+                (assert (< (f a true) 100))
+            </code><br>
+            We are effectively checking two formulae here. ie Stating that a is less than 10 and that the return value of the function f which accepts a and a boolean variable is less than 100. And now that we have specified the formulae / assertions we can check if they are satisfiable using the (check-sat) command<br>
+            <code>
+                (declare-const a Int)
+                (declare-fun f (Int Bool) Int)
+                (assert (< a 10))
+                (assert (< (f a true) 100))
+                (check-sat)
+            </code><br>
+            This will output 'sat' which means there are conditions where these two formulae are satisfied. If Z3 thinks it cannot be satisfied then it will print out 'unsat'. In cases where it cannot decide between sat and unsat it will print 'unknown'. The details on what makes a problem decidable is still unknown, I will add more details on this as I come across them. But in this case Z3 can figure out some model where the assertions hold true, so it says 'sat'
+            <p>Since the formulae above are 'sat' type we can use the (get-model) command which returns one interpretation where all the formulae in the stack are true</p>
+        </main>
+    </body>
+</html>
