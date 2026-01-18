@@ -207,7 +207,8 @@ function initHeroAnimation() {
     if (typeof faceBase64 !== 'undefined') {
         faceImg.src = faceBase64;
     } else {
-        faceImg.src = 'images/face_map.png';
+        console.warn('faceBase64 is undefined. Animation will not load.');
+        return;
     }
     faceImg.onload = () => {
         // Image Processing to get Targets
@@ -436,8 +437,7 @@ if (cardCanvas) {
             this.x = this.baseX + wave * amplitude * 0.5; // Slight horizontal movement
             this.y = this.baseY + wave * amplitude;      // Main vertical oscillation
 
-            // Optional: Size modulation for 3D effect
-            // this.size = 1.2 + wave * 0.3;
+
         }
 
         draw() {
