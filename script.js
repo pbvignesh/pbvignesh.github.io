@@ -350,12 +350,12 @@ function animateHero() {
         p.y += dy * p.speed;
 
         // Draw
+        if (!p.isFace) continue;
+
         ctxH.beginPath();
         ctxH.arc(p.x, p.y, p.size, 0, Math.PI * 2);
 
-        let alpha = p.isFace ? 0.9 : 0.05;
-
-        ctxH.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+        ctxH.fillStyle = `rgba(255, 255, 255, 0.9)`;
         ctxH.fill();
     }
 
