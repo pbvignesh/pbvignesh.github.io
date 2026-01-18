@@ -142,6 +142,25 @@ const contentViews = {
                 </ul>
             </article>
         </div>
+    `,
+
+    'experiments': `
+        <div class="fade-in">
+            <header class="content-header">
+                <h2>Experiments & Thoughts</h2>
+            </header>
+            <div class="timeline-container">
+                <!-- Timeline Item 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content card" data-spa="true">
+                        <span class="timeline-date">Jan 2026</span>
+                        <a href="pages/antigravity.html" data-spa="true"><h3>My Experiments with Google Antigravity</h3></a>
+                        <p>A deep dive into building agentic workflows and reviewing code with AI.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     `
 };
 
@@ -165,7 +184,7 @@ function loadSection(targetKey) {
         mainContent.innerHTML = contentViews[targetKey];
 
         // Specific logic per view
-        if (targetKey === 'notes') {
+        if (targetKey === 'notes' || targetKey === 'experiments') {
             attachSPAListeners();
         } else if (targetKey === 'home') {
             initHeroAnimation();
@@ -400,12 +419,12 @@ async function loadArticle(url) {
         // Render
         mainContent.innerHTML = `
             <div class="fade-in">
-                <button onclick="loadSection('notes')" class="btn-back">← Back to Notes</button>
+                <button onclick="loadSection('experiments')" class="btn-back">← Back to Experiments</button>
                 <div class="content-body article-view">
                     ${articleContent.innerHTML}
                 </div>
             </div>
-        `;
+    `;
 
     } catch (error) {
         console.error("Error loading page:", error);

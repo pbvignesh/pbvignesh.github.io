@@ -396,3 +396,66 @@ body {
     padding-left: 5px;
     color: var(--text-white);
 }
+/* --- Timeline Views --- */
+.timeline-container {
+    position: relative;
+    padding: 20px 0 20px 20px;
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
+    margin-left: 10px;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 30px;
+    padding-left: 20px;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -27px; /* Adjust based on border + marker size */
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    background: var(--text-color);
+    border-radius: 50%;
+    border: 2px solid var(--bg-dark); /* Create a "gap" effect */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.timeline-content {
+    /* Inherits .card styles but constrained */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.timeline-date {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.timeline-content h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.timeline-content p {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.timeline-content a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.timeline-content a:hover h3 {
+    color: var(--accent-blue);
+    transition: color 0.3s ease;
+}
