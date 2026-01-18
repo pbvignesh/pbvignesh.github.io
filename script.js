@@ -209,3 +209,94 @@ async function loadArticle(url) {
 
 // Global styles for the back button injected via JS? Or add to CSS.
 // Let's rely on CSS, but I'll add a class for it.
+
+
+// --- Profile Card Animation (Atomic Grid Wave) ---
+const cardCanvas = document.getElementById('card-canvas');
+if (cardCanvas) {
+    const ctxCard = cardCanvas.getContext('2d');
+    let cardW, cardH;
+
+    // Atomic Wave Animation
+    const particles = [];
+    const spacing = 18; // Tighter spacing for atomic look
+
+    class Atom {
+        constructor(x, y) {
+            this.baseX = x;
+            this.baseY = y;
+            this.x = x;
+            this.y = y;
+            this.size = 1.2;
+        }
+
+        update(time) {
+            // Wave equation parameters
+            const amplitude = 4;
+            // Diagonal wave flow: (x+y) creates diagonal bands
+            const wave = Math.sin(time + (this.baseX * 0.01 + this.baseY * 0.01));
+
+            // Movement: Atoms oscillate around base position
+            this.x = this.baseX + wave * amplitude * 0.5; // Slight horizontal movement
+            this.y = this.baseY + wave * amplitude;      // Main vertical oscillation
+
+            // Optional: Size modulation for 3D effect
+            // this.size = 1.2 + wave * 0.3;
+        }
+
+        draw() {
+            ctxCard.beginPath();
+            ctxCard.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctxCard.fillStyle = 'rgba(255, 255, 255, 0.2)'; // Subtle opacity
+            ctxCard.fill();
+        }
+    }
+
+    function initAtoms() {
+        particles.length = 0;
+        // Calculate rows/cols based on size + padding
+        const cols = Math.ceil(cardW / spacing) + 4;
+        const rows = Math.ceil(cardH / spacing) + 4;
+
+        // Start from negative to cover edges during wave movement
+        for (let i = -2; i < cols; i++) {
+            for (let j = -2; j < rows; j++) {
+                particles.push(new Atom(i * spacing, j * spacing));
+            }
+        }
+    }
+
+    function resizeCard() {
+        const rect = cardCanvas.parentElement.getBoundingClientRect();
+        cardW = rect.width;
+        cardH = rect.height;
+        // Handle high DPI displays for crisp circles
+        const dpr = window.devicePixelRatio || 1;
+        cardCanvas.width = cardW * dpr;
+        cardCanvas.height = cardH * dpr;
+        ctxCard.scale(dpr, dpr);
+        cardCanvas.style.width = cardW + 'px';
+        cardCanvas.style.height = cardH + 'px';
+
+        initAtoms();
+    }
+
+    // Resize observer for the card element mainly
+    new ResizeObserver(resizeCard).observe(cardCanvas.parentElement);
+    resizeCard();
+
+    // Time accumulator
+    let time = 0;
+
+    function animateCard() {
+        ctxCard.clearRect(0, 0, cardW, cardH);
+        time += 0.03; // Wave speed
+
+        particles.forEach(p => {
+            p.update(time);
+            p.draw();
+        });
+        requestAnimationFrame(animateCard);
+    }
+    animateCard();
+}

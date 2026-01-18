@@ -82,6 +82,27 @@ body {
     overflow: hidden;
     box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease;
+    z-index: 1;
+    /* New stacking context */
+}
+
+#card-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    /* Behind text */
+    pointer-events: none;
+}
+
+.profile-header,
+.social-links-card,
+.decoration {
+    z-index: 2;
+    /* Ensure content is above canvas */
+    position: relative;
 }
 
 .profile-card:hover {
