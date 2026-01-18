@@ -242,7 +242,7 @@ function initHeroAnimation() {
 
         // 1. Scan Face Points with STOCHASTIC DITHERING
         const facePoints = [];
-        const gap = 5;
+        const gap = 3; // Reduced gap for higher density
         for (let y = 0; y < h; y += gap) {
             for (let x = 0; x < w; x += gap) {
                 const index = (y * w + x) * 4;
@@ -251,8 +251,15 @@ function initHeroAnimation() {
                 const b = imgData[index + 2];
                 const brightness = (r + g + b) / 3;
 
-                if (Math.random() < (brightness / 255)) {
-                    facePoints.push({ x: x, y: y });
+                // Boost probability: make mid-tones more likely to spawn particles
+                // If brightness > 20 (dark grey), give it a chance.
+                // Power curve (brightness^0.8) might help lift shadows
+
+                if (brightness > 20) {
+                    const prob = Math.min(1, Math.pow(brightness / 255, 0.8) * 1.5);
+                    if (Math.random() < prob) {
+                        facePoints.push({ x: x, y: y });
+                    }
                 }
             }
         }
