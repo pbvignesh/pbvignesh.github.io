@@ -1,107 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vignesh | Software Engineer</title>
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <canvas id="bg-canvas"></canvas>
 
-    <main class="container">
-        <!-- Hero Section -->
-        <section id="hero" class="hero">
-            <div class="hero-content">
-                <span class="subtitle">Hello, I am</span>
-                <h1>Vignesh</h1>
-                <p class="role">Software Developer & Tech Euthusiast</p>
-                <div class="actions">
-                    <a href="#about" class="btn">Explore My Work</a>
+    <div class="dashboard-layout">
+        <!-- Sidebar / Left Panel -->
+        <aside class="sidebar">
+            <!-- Profile Card -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <h1>Vignesh</h1>
+                    <p class="role">Software Developer<br> & Tech Enthusiast</p>
+                </div>
+
+                <div class="decoration">
+                    <!-- Artistic decoration using CSS/SVG -->
+                    <div class="pixel-art"></div>
+                </div>
+
+                <div class="social-links-card">
+                    <a href="https://twitter.com/7_vignesh" target="_blank">Twitter</a>
+                    <a href="https://www.linkedin.com/in/vignesh-p-b-5b278a135/" target="_blank">LinkedIn</a>
                 </div>
             </div>
-        </section>
 
-        <!-- About Section -->
-        <section id="about">
-            <h2>About Me</h2>
-            <div class="content-block">
-                <p>Hi! I am a software engineer with more than 7 years of experience in the industry. I have worked with a wide variety of tools and tech. I've worked with PHP frameworks like Laravel, CakePHP. I've worked with Typescript and other JS frameworks like ReactJS and EmberJS.</p>
-                <br>
-                <p>I've also experimented with databases and search engines like MySQL and Elastic and lately I've been doing a lot of work in AI driven applications (primarily LLM backed applications and applications that use RAG and MCP Servers).</p>
-                <br>
-                <p>I don't really have a preferred tech stack and I love working with anything and everything that helps me solve a problem or makes me curious. This site is just me collating all my notes together.</p>
+            <!-- Vertical Navigation -->
+            <nav class="main-nav">
+                <button class="nav-item active" data-target="about">About Me</button>
+                <button class="nav-item" data-target="notes">Notes & Articles</button>
+                <button class="nav-item" data-target="roadmap">Roadmap</button>
+                <button class="nav-item" data-target="resources">Resources</button>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main id="main-content" class="content-area">
+            <!-- Dynamic Content Injected Here -->
+            <!-- Initial State: About Me -->
+            <div id="default-view" class="fade-in">
+                <header class="content-header">
+                    <h2>About Me</h2>
+                </header>
+                <article class="content-body">
+                    <p class="lead">Hi! I am a software engineer with more than 8 years of experience in the industry.
+                    </p>
+
+                    <p>I have worked with a wide variety of tools and tech. I've worked with PHP, Python and Javascript
+                        and their frameworks.</p>
+                    <p>I've also experimented with databases and search engines like MySQL and Elastic and lately I've
+                        been
+                        doing a lot of work in AI driven applications (primarily LLM backed applications and
+                        applications
+                        that use RAG and MCP Servers).</p>
+
+                    <p>I don't really have a preferred tech stack and I love working with anything and everything that
+                        helps
+                        me solve a problem or makes me curious. This site is just me collating all my notes and
+                        experiments
+                        together.</p>
+                </article>
             </div>
-        </section>
-
-        <!-- Articles Section -->
-        <section id="articles">
-            <h2>Technical Articles & Notes</h2>
-            <p class="section-desc">My learning notes and explorations.</p>
-            
-            <div class="grid">
-                <!-- Articles will be styled in next step -->
-                <a href="pages/voice_agents.html" class="card"><h3>Voice Agents</h3></a>
-                <a href="pages/concurrency_python.html" class="card"><h3>Concurrency in Python</h3></a>
-                <a href="pages/cqrs.html" class="card"><h3>CQRS</h3></a>
-                <a href="pages/python_virtual_environment.html" class="card"><h3>Python Venv</h3></a>
-                <a href="pages/nodejs.html" class="card"><h3>Node JS</h3></a>
-                <a href="pages/overcoming_io_overhead.html" class="card"><h3>IO Overhead</h3></a>
-                <a href="pages/elastic_search.html" class="card"><h3>Elastic Search</h3></a>
-                <a href="pages/sqlalchemy.html" class="card"><h3>SQLAlchemy</h3></a>
-                <a href="pages/typeorm.html" class="card"><h3>TypeORM</h3></a>
-                <a href="pages/database_backups.html" class="card"><h3>DB Backups</h3></a>
-                <a href="pages/dunder.html" class="card"><h3>Dunder Methods</h3></a>
-                <a href="pages/terraform.html" class="card"><h3>Terraform</h3></a>
-                <a href="pages/docker.html" class="card"><h3>Docker</h3></a>
-                <a href="pages/aws.html" class="card"><h3>AWS</h3></a>
-                <a href="pages/grafana.html" class="card"><h3>Grafana</h3></a>
-                <a href="pages/prompt_templates.html" class="card"><h3>LLM Prompts</h3></a>
-                <a href="pages/tmux.html" class="card"><h3>Tmux</h3></a>
-                <a href="pages/z3.html" class="card"><h3>Z3 Prover</h3></a>
-            </div>
-        </section>
-
-        <!-- Roadmap & Resources condensed for now -->
-        <section id="extras">
-            <div class="extras-grid">
-                <div class="roadmap">
-                    <h3>Learning Roadmap</h3>
-                    <ul>
-                        <li>VPN & Wi-Fi</li>
-                        <li>Solr / Splunk / Marklogic</li>
-                        <li>Homebrew & Composer</li>
-                    </ul>
-                </div>
-                <div class="resources">
-                    <h3>Useful Resources</h3>
-                    <ul>
-                        <li><a href="https://db-engines.com/en/" target="_blank">DB Engines</a></li>
-                        <li><a href="https://stackoverflow.com/questions/15694724/shards-and-replicas-in-elasticsearch" target="_blank">ES Shards & Replicas</a></li>
-                        <li><a href="https://www.susanrigetti.com/math" target="_blank">Susan Fowler's Math Guide</a></li>
-                        <li><a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ" target="_blank">Event Loop Explained</a></li>
-                        <li><a href="https://mlabonne.github.io/blog/posts/2023-06-07-Decoding_strategies.html" target="_blank">LLM Decoding</a></li>
-                        <li><a href="https://eatonphil.com/blogs.html" target="_blank">Phil Eaton's Blog</a></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>© 2025 Pb. All rights reserved.</p>
-        <div class="socials">
-             <a href="https://twitter.com/7_vignesh" target="_blank">Twitter</a>
-             <a href="https://www.linkedin.com/in/vignesh-p-b-5b278a135/" target="_blank">LinkedIn</a>
-        </div>
-    </footer>
+        </main>
+    </div>
 
     <script src="script.js"></script>
 </body>
+
 </html>
