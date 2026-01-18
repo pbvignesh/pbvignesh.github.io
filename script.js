@@ -63,6 +63,10 @@ animate();
 const mainContent = document.getElementById('main-content');
 const navItems = document.querySelectorAll('.nav-item');
 let heroAnimationId; // Animation ID for cleanup
+let artRotationInterval;
+let ctxH;
+let w, h;
+const heroParticles = [];
 
 
 // Content Templates (Hardcoded for simplicity, usually these would be loaded or generated)
@@ -179,9 +183,9 @@ function initHeroAnimation() {
 
     // cleanup previous if any
     if (heroAnimationId) cancelAnimationFrame(heroAnimationId);
+    if (artRotationInterval) clearInterval(artRotationInterval);
 
-    const ctxH = heroCanvas.getContext('2d');
-    let w, h;
+    ctxH = heroCanvas.getContext('2d');
 
     function resizeHero() {
         const rect = heroCanvas.parentElement.getBoundingClientRect();
@@ -199,158 +203,163 @@ function initHeroAnimation() {
     setTimeout(resizeHero, 50);
 
     // Particle System
-    const heroParticles = [];
+    // heroParticles defined globally
+    heroParticles.length = 0; // Clear existing particles on re-init
     const spacing = 12; // Grid spacing
+    let currentArtIndex = 0;
 
-    // Load Image for Face Targets
-    const faceImg = new Image();
-    if (typeof faceBase64 !== 'undefined') {
-        faceImg.src = faceBase64;
-    } else {
-        console.warn('faceBase64 is undefined. Animation will not load.');
-        return;
-    }
-    faceImg.onload = () => {
-        // Image Processing to get Targets
-        // Draw image to offscreen canvas to read pixels
-        const offCanvas = document.createElement('canvas');
-        // scale image to fit canvas or specific size
-        // We want the face to be centered and reasonable size
-        const faceW = Math.min(w * 0.8, 600); // Max 600px wide
-        const scale = faceW / faceImg.width;
-        const faceH = faceImg.height * scale;
+    function updateHeroTargets(imageSrc) {
+        if (!imageSrc) return;
 
-        offCanvas.width = w;
-        offCanvas.height = h;
-        const offCtx = offCanvas.getContext('2d');
+        const faceImg = new Image();
+        faceImg.src = imageSrc;
 
-        // Center the image
-        const imgX = (w - faceW) / 2;
-        const imgY = (h - faceH) / 2;
+        faceImg.onload = () => {
+            // Image Processing to get Targets
+            const offCanvas = document.createElement('canvas');
+            const faceW = Math.min(w * 0.8, 600); // Max 600px wide
+            const scale = faceW / faceImg.width;
+            const faceH = faceImg.height * scale;
 
-        offCtx.drawImage(faceImg, imgX, imgY, faceW, faceH);
+            offCanvas.width = w;
+            offCanvas.height = h;
+            const offCtx = offCanvas.getContext('2d');
 
-        const imgData = offCtx.getImageData(0, 0, w, h).data;
+            // Center the image
+            const imgX = (w - faceW) / 2;
+            const imgY = (h - faceH) / 2;
 
-        // Initialize Particles
-        // We need enough particles to fill the grid AND form the face.
-        // Strategy: Create particles in a Grid.
-        // Then assign "Target" coordinates to them based on the face map.
-        // If there are more face points than grid points, creates more.
-        // If fewer, some stay in grid or float away.
+            offCtx.drawImage(faceImg, imgX, imgY, faceW, faceH);
 
-        heroParticles.length = 0;
+            const imgData = offCtx.getImageData(0, 0, w, h).data;
 
-        // 1. Scan Face Points with STOCHASTIC DITHERING
-        const facePoints = [];
-        const gap = 3; // Reduced gap for higher density
-        for (let y = 0; y < h; y += gap) {
-            for (let x = 0; x < w; x += gap) {
-                const index = (y * w + x) * 4;
-                const r = imgData[index];
-                const g = imgData[index + 1];
-                const b = imgData[index + 2];
-                const brightness = (r + g + b) / 3;
+            // 1. Scan Face Points with STOCHASTIC DITHERING
+            const facePoints = [];
+            const gap = 3;
+            for (let y = 0; y < h; y += gap) {
+                for (let x = 0; x < w; x += gap) {
+                    const index = (y * w + x) * 4;
+                    const r = imgData[index];
+                    const g = imgData[index + 1];
+                    const b = imgData[index + 2];
+                    const brightness = (r + g + b) / 3;
 
-                // Boost probability: make mid-tones more likely to spawn particles
-                // If brightness > 20 (dark grey), give it a chance.
-                // Power curve (brightness^0.8) might help lift shadows
-
-                if (brightness > 20) {
-                    const prob = Math.min(1, Math.pow(brightness / 255, 0.8) * 1.5);
-                    if (Math.random() < prob) {
-                        facePoints.push({ x: x, y: y });
+                    if (brightness > 20) {
+                        const prob = Math.min(1, Math.pow(brightness / 255, 0.8) * 1.5);
+                        if (Math.random() < prob) {
+                            facePoints.push({ x: x, y: y });
+                        }
                     }
                 }
             }
-        }
+            // Shuffle face points
+            facePoints.sort(() => Math.random() - 0.5);
 
-        // Shuffle face points to prevent "scanline" filling effect
-        facePoints.sort(() => Math.random() - 0.5);
+            // Re-use or Create Particles
+            const gridCols = Math.ceil(w / spacing);
+            const gridRows = Math.ceil(h / spacing);
+            const totalGridPoints = gridCols * gridRows;
 
-        // 2. Create Initial Grid (The "Atom Sea")
-        // We want enough particles for the face, or a nice grid.
-        // Let's create particles based on the grid spacing first.
-        const gridCols = Math.ceil(w / spacing);
-        const gridRows = Math.ceil(h / spacing);
+            // Ensure we have enough particles for the new face
+            const requiredParticles = Math.max(facePoints.length, totalGridPoints);
 
-        let pIndex = 0;
-
-        for (let i = 0; i < gridCols; i++) {
-            for (let j = 0; j < gridRows; j++) {
-                const px = i * spacing;
-                const py = j * spacing;
-
-                let target = null;
-                // Assign a face target if available
-                if (pIndex < facePoints.length) {
-                    target = facePoints[pIndex];
-                } else {
-                    // Extra particles go to random edge or stay grid
-                    // Let's make them float away or stay as background
-                    target = { x: Math.random() * w, y: Math.random() * h, alpha: 0 };
+            // Add new particles if needed
+            if (heroParticles.length < requiredParticles) {
+                for (let i = heroParticles.length; i < requiredParticles; i++) {
+                    const gx = (i % gridCols) * spacing;
+                    const gy = Math.floor(i / gridCols) * spacing;
+                    heroParticles.push({
+                        x: Math.random() * w,
+                        y: Math.random() * h,
+                        baseX: gx,
+                        baseY: gy,
+                        tx: gx,
+                        ty: gy,
+                        isFace: false,
+                        vx: 0,
+                        vy: 0,
+                        size: 2,
+                        speed: 0.05
+                    });
                 }
-
-                heroParticles.push({
-                    x: px,
-                    y: py,
-                    baseX: px,
-                    baseY: py,
-                    tx: target ? target.x : px,
-                    ty: target ? target.y : py,
-                    isFace: !!target && target.alpha !== 0,
-                    size: Math.random() * 1.5 + 0.5,
-                    speed: Math.random() * 0.05 + 0.02
-                });
-                pIndex++;
             }
-        }
 
-        // If we have MORE face points than grid points (likely), add more particles starting at random positions
-        while (pIndex < facePoints.length) {
-            const target = facePoints[pIndex];
-            heroParticles.push({
-                x: Math.random() * w,
-                y: Math.random() * h,
-                baseX: Math.random() * w,
-                baseY: Math.random() * h,
-                tx: target.x,
-                ty: target.y,
-                isFace: true,
-                size: Math.random() * 1.5 + 0.5,
-                speed: Math.random() * 0.05 + 0.02
+            // Assign Targets
+            heroParticles.forEach((p, i) => {
+                if (i < facePoints.length) {
+                    // It's a face particle
+                    p.tx = facePoints[i].x;
+                    p.ty = facePoints[i].y;
+                    p.isFace = true;
+                } else {
+                    // It's a grid/background particle
+                    // If it was previously a face, send it back to base
+                    // Use modulo to wrap grid positions if we have excess particles
+                    const gridIndex = i % totalGridPoints;
+                    const gx = (gridIndex % gridCols) * spacing;
+                    const gy = Math.floor(gridIndex / gridCols) * spacing;
+
+                    p.tx = gx;
+                    p.ty = gy;
+                    p.isFace = false;
+                }
             });
-            pIndex++;
-        }
-
-        // Start Animation Loop once loaded
-        animateHero();
-    };
-
-    function animateHero() {
-        ctxH.clearRect(0, 0, w, h);
-
-        for (let i = 0; i < heroParticles.length; i++) {
-            const p = heroParticles[i];
-
-            // Move
-            const dx = p.tx - p.x;
-            const dy = p.ty - p.y;
-            p.x += dx * p.speed;
-            p.y += dy * p.speed;
-
-            // Draw
-            ctxH.beginPath();
-            ctxH.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-
-            let alpha = p.isFace ? 0.9 : 0.05;
-
-            ctxH.fillStyle = `rgba(255, 255, 255, ${alpha})`;
-            ctxH.fill();
-        }
-
-        heroAnimationId = requestAnimationFrame(animateHero);
+        };
     }
+
+
+
+
+
+    // cleanup previous if any
+    if (heroAnimationId) cancelAnimationFrame(heroAnimationId);
+    if (artRotationInterval) clearInterval(artRotationInterval);
+
+    ctxH = heroCanvas.getContext('2d');
+
+    resizeHero();
+    window.addEventListener('resize', resizeHero);
+
+    // Re-verify size after a moment for layout settlement
+    setTimeout(resizeHero, 50);
+
+    // Particle System
+    heroParticles.length = 0; // Clear existing particles on re-init
+
+    // Start Animation Loop
+    animateHero();
+
+    // Initial load (Single Image - Face)
+    if (typeof faceBase64 !== 'undefined') {
+        updateHeroTargets(faceBase64);
+    }
+}
+
+function animateHero() {
+    if (!ctxH) return;
+
+    ctxH.clearRect(0, 0, w, h);
+
+    for (let i = 0; i < heroParticles.length; i++) {
+        const p = heroParticles[i];
+
+        // Move
+        const dx = p.tx - p.x;
+        const dy = p.ty - p.y;
+        p.x += dx * p.speed;
+        p.y += dy * p.speed;
+
+        // Draw
+        ctxH.beginPath();
+        ctxH.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+
+        let alpha = p.isFace ? 0.9 : 0.05;
+
+        ctxH.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+        ctxH.fill();
+    }
+
+    heroAnimationId = requestAnimationFrame(animateHero);
 }
 
 
