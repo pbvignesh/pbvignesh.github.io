@@ -1,99 +1,298 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vignesh | Software Engineer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vignesh Pattalam Bharathkumar - Staff Software Engineer</title>
+<meta name="description" content="Vignesh Pattalam Bharathkumar - Staff Software Engineer and founding engineer of an applied-AI platform. Builds agentic LLM products (RAG, natural-language analytics, eval loops). 9 years across backend, data, and AI.">
+<meta name="author" content="Vignesh Pattalam Bharathkumar">
+<link rel="canonical" href="https://pbvignesh.github.io/">
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700&display=swap"
-        rel="stylesheet">
+<!-- Open Graph / social preview (matters when a recruiter shares the link) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Vignesh Pattalam Bharathkumar - Staff Software Engineer">
+<meta property="og:description" content="Founding engineer of an applied-AI platform. Agentic LLM products, RAG, and eval loops.">
+<meta property="og:url" content="https://pbvignesh.github.io/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vignesh Pattalam Bharathkumar - Staff Software Engineer">
+<meta name="twitter:description" content="Founding engineer of an applied-AI platform. Agentic LLM products, RAG, and eval loops.">
 
-    <link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfbf9;
+    --bg-alt: #f7f6f2;
+    --ink: #1a1a1a;
+    --muted: #6b6b66;
+    --faint: #a0a09a;
+    --line: #e6e4dd;
+    --accent: #3b6ea5;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .wrap {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* mono utility labels */
+  .mono {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--faint);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  a:hover { border-bottom-color: var(--ink); }
+
+  a.accent { color: var(--accent); }
+  a.accent:hover { border-bottom-color: var(--accent); }
+
+  /* ---- header ---- */
+  header {
+    padding: 72px 0 8px;
+  }
+  header .mono { display: block; margin-bottom: 20px; }
+
+  h1 {
+    font-size: 1.9rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 10px;
+    line-height: 1.2;
+  }
+
+  .role {
+    font-size: 1rem;
+    color: var(--muted);
+    margin: 0 0 28px;
+    font-weight: 400;
+  }
+
+  .tagline {
+    font-size: 1.12rem;
+    line-height: 1.55;
+    max-width: 560px;
+    margin: 0 0 18px;
+  }
+
+  /* ---- sections ---- */
+  section { padding: 56px 0; }
+
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 36px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .sec-head .num {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+  .sec-head h2 {
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ---- work list ---- */
+  .work-item {
+    padding: 26px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .work-item:first-child { padding-top: 0; }
+  .work-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .work-title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .work-title h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .work-title .meta {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--faint);
+    white-space: nowrap;
+  }
+
+  .work-item p {
+    margin: 0 0 12px;
+    color: #333;
+    font-size: 0.96rem;
+  }
+  .work-item p:last-child { margin-bottom: 0; }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 12px;
+  }
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.01em;
+  }
+
+  .work-link {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+  }
+
+  /* ---- footer ---- */
+  footer {
+    padding: 56px 0 80px;
+    border-top: 1px solid var(--line);
+  }
+  .foot-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 28px;
+    margin-bottom: 24px;
+  }
+  .foot-links a {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+  }
+  .colophon {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--faint);
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 520px) {
+    header { padding-top: 52px; }
+    h1 { font-size: 1.6rem; }
+    .tagline { font-size: 1.02rem; }
+    section { padding: 44px 0; }
+  }
+</style>
 </head>
-
 <body>
-    <canvas id="bg-canvas"></canvas>
+<div class="wrap">
 
-    <div class="dashboard-layout">
-        <!-- Sidebar / Left Panel -->
-        <aside class="sidebar">
-            <!-- Profile Card -->
-            <div class="profile-card">
-                <canvas id="card-canvas"></canvas>
-                <div class="profile-header">
-                    <h1>Vignesh</h1>
-                    <p class="role">Software Developer<br> & Tech Enthusiast</p>
-                </div>
+  <header>
+    <span class="mono">Vignesh Pattalam Bharathkumar</span>
+    <h1>Vignesh</h1>
+    <p class="role">Staff Software Engineer, founding engineer of an applied-AI platform</p>
+    <p class="tagline">I build agentic LLM products (RAG, natural-language analytics, eval loops) that cut analysis from weeks to hours. 9 years across backend, data, and AI.</p>
+  </header>
 
-                <div class="decoration">
-                    <!-- Artistic decoration using CSS/SVG -->
-                    <div class="pixel-art"></div>
-                </div>
-
-                <div class="social-links-card">
-                    <a href="https://twitter.com/7_vignesh" target="_blank" aria-label="Twitter">
-                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                            <path
-                                d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z">
-                            </path>
-                        </svg>
-                    </a>
-                    <a href="https://www.linkedin.com/in/vignesh-p-b-5b278a135/" target="_blank" aria-label="LinkedIn">
-                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                            <path
-                                d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z">
-                            </path>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Vertical Navigation -->
-            <nav class="main-nav">
-                <button class="nav-item active" data-target="about">About Me</button>
-                <!-- <button class="nav-item" data-target="notes">Notes & Articles</button> -->
-                <button class="nav-item" data-target="experiments">Experiments & Thoughts</button>
-                <button class="nav-item" data-target="roadmap">Roadmap</button>
-                <button class="nav-item" data-target="resources">Resources</button>
-            </nav>
-        </aside>
-
-        <!-- Main Content Area -->
-        <main id="main-content" class="content-area">
-            <!-- Dynamic Content Injected Here -->
-            <!-- Initial State: About Me -->
-            <div id="default-view" class="fade-in">
-                <header class="content-header">
-                    <h2>About Me</h2>
-                </header>
-                <article class="content-body">
-                    <p class="lead">Hi! I am a software engineer with more than 8 years of experience in the industry.
-                    </p>
-
-                    <p>I have worked with a wide variety of tools and tech. I've worked with PHP, Python and Javascript
-                        and their frameworks.</p>
-                    <p>I've also experimented with databases and search engines like MySQL and Elastic and lately I've
-                        been doing a lot of work in AI driven applications (primarily LLM backed applications and
-                        applications
-                        that use RAG and MCP Servers).</p>
-
-                    <p>I don't really have a preferred tech stack and I love working with anything and everything that
-                        helps
-                        me solve a problem or makes me curious. This site is just me collating all my notes and
-                        experiments
-                        together.</p>
-                </article>
-            </div>
-        </main>
+  <section id="work">
+    <div class="sec-head">
+      <span class="num">01</span>
+      <h2>Selected Work</h2>
     </div>
 
-    <script src="face_data.js"></script>
-    <script src="script.js"></script>
-</body>
+    <div class="work-item">
+      <div class="work-title">
+        <h3>Sagan Agents</h3>
+        <span class="meta">Founding engineer</span>
+      </div>
+      <p>Applied-AI platform for pharma market research. The Data Archive Copilot returns cited answers over 10 years of structured and unstructured data (RAG with eval loops). Multi-tenant on AWS.</p>
+      <p>5 clients in the first 2 months, 15+ internal teams.</p>
+      <div class="tags">
+        <span class="tag">FastAPI</span>
+        <span class="tag">Temporal</span>
+        <span class="tag">per-tenant Postgres</span>
+        <span class="tag">AWS</span>
+        <span class="tag">RAG</span>
+      </div>
+    </div>
 
+    <div class="work-item">
+      <div class="work-title">
+        <h3>Dashboard Builder</h3>
+        <span class="meta">Analytics</span>
+      </div>
+      <p>Natural language to live analytics, paired with a self-improving evals system that tightens accuracy over time.</p>
+      <div class="tags">
+        <span class="tag">NL to SQL</span>
+        <span class="tag">evals</span>
+      </div>
+    </div>
+
+    <div class="work-item">
+      <div class="work-title">
+        <h3>Gen-AI Survey Automation</h3>
+        <span class="meta">LangGraph</span>
+      </div>
+      <p>Stateful LangGraph pipeline with per-state Langfuse evals. Survey programming dropped from days to minutes.</p>
+      <div class="tags">
+        <span class="tag">LangGraph</span>
+        <span class="tag">Langfuse</span>
+      </div>
+    </div>
+
+    <div class="work-item">
+      <div class="work-title">
+        <h3>Langfuse Python SDK</h3>
+        <span class="meta">open source</span>
+      </div>
+      <p>Merged PR fixing AWS Bedrock token-usage tracking.</p>
+      <p><a class="accent work-link" href="https://github.com/langfuse/langfuse-python/pull/1267">github.com/langfuse/langfuse-python/pull/1267</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-links">
+      <a href="https://github.com/pbvignesh">GitHub</a>
+      <a href="https://www.linkedin.com/in/pbvignesh/">LinkedIn</a>
+      <a href="mailto:vigneshpb7@outlook.com">Email</a>
+      <a class="accent" href="Vignesh_PB_CV_2026-08.pdf" download="Vignesh PB Resume.pdf">Download CV</a>
+    </div>
+    <p class="colophon">Built quietly. Inter and JetBrains Mono. No trackers.</p>
+  </footer>
+
+</div>
+</body>
 </html>
